@@ -15,8 +15,13 @@ export class User {
   }
 }
 
+const user1: User = {
+  userName: 'anton',
+  avatarUrl: '/img/avatar.png'
+}
 
 export function getUserData () {
+  window.localStorage.setItem('user',JSON.stringify(user1));
   const user: unknown = JSON.parse(window.localStorage.getItem('user'));
   Object.setPrototypeOf(user, User.prototype);
   
@@ -28,5 +33,12 @@ export function getUserData () {
 }
 
 export function getFavoritesAmount() {
-  return +window.localStorage.getItem('favoritesAmount');
+  window.localStorage.setItem('favoritesAmount','0');
+  const amount = +window.localStorage.getItem('favoritesAmount');
+  if(!Number.isNaN(amount)){
+    return amount;
+  }else {
+    throw new Error('favoritesAmount in local storage is not a number')
+  }
+  
 }
