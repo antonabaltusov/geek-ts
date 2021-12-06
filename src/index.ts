@@ -3,6 +3,7 @@ import { renderSearchStubBlock } from './search-results.js'
 import { renderUserBlock } from './user.js'
 import { renderToast } from './lib.js'
 import {User, getUserData, getFavoritesAmount} from './user-model.js'
+import {getTodosByCount} from './todos.js'
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -17,4 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
     {text: 'Это пример уведомления.', type: 'success'},
     {name: 'Понял', handler: () => {console.log('Уведомление закрыто')}}
   )
+  console.log(getTodosByCount(3));
+  
 })
