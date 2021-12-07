@@ -4,6 +4,9 @@ import { renderUserBlock } from './user.js'
 import { renderToast } from './lib.js'
 import {User, getUserData, getFavoritesAmount} from './user-model.js'
 import {getTodosByCount} from './todos.js'
+import {addDays, FlatRentSdk} from './flat-rent-sdk.js'
+
+
 
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -19,5 +22,6 @@ window.addEventListener('DOMContentLoaded', () => {
     {name: 'Понял', handler: () => {console.log('Уведомление закрыто')}}
   )
   console.log(getTodosByCount(3));
-  
+  const a = new FlatRentSdk();
+  console.log(a.get('vnd331'));
 })
