@@ -22,19 +22,24 @@ const user1: User = {
 
 export function getUserData () {
   window.localStorage.setItem('user',JSON.stringify(user1));
-  const user: unknown = JSON.parse(window.localStorage.getItem('user'));
-  Object.setPrototypeOf(user, User.prototype);
-  
-  if (user instanceof User) {
-    return user;
-  } else {
+  const userFromStorage = window.localStorage.getItem('user')
+  if(userFromStorage!= null){
+    const user: unknown = JSON.parse(userFromStorage);
+    Object.setPrototypeOf(user, User.prototype);
+    if (user instanceof User) {
+      return user;
+    } else {
+      throw new Error('User in local storage is wrong')
+    }
+  }else{
     throw new Error('User in local storage is wrong')
   }
 }
 
 export function getFavoritesAmount() {
   window.localStorage.setItem('favoritesAmount','0');
-  const amount = +window.localStorage.getItem('favoritesAmount');
+  const amountJsonStorage = window.localStorage.getItem('favoritesAmount');
+  const amount = amountJsonStorage ? +amountJsonStorage : 0;
   if(!Number.isNaN(amount)){
     return amount;
   }else {
