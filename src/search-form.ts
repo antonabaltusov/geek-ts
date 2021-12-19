@@ -1,4 +1,8 @@
 import { renderBlock } from './lib.js'
+import { ISearchFormData, searchFormFunc} from './search-interface.js'
+
+export type namesType = 'checkin' | 'checkout' | 'price'
+
 
 export function renderSearchFormBlock (checkin:Date, checkout:Date) {
 
@@ -12,11 +16,33 @@ export function renderSearchFormBlock (checkin:Date, checkout:Date) {
   const checkoutDefault = new Date(checkinDefault);
   checkoutDefault.setDate(checkoutDefault.getDate()+2);
   const checkoutDefaultString = checkoutDefault.toISOString().slice(0,10);
+
+  
+
+  function submitFormEvent(e:Event, arrayValues:namesType[]){
+    
+    e.preventDefault()
+    if (e.target){
+      const formData = new FormData(e.target as HTMLFormElement)
+      
+      const formDataEntries: ISearchFormData = {};
+
+      arrayValues.forEach(key => {
+        formDataEntries[key] = <namesType>formData.get(key)
+      })
+
+      searchFormFunc(formDataEntries)
+      //callback().then(console.log()).catch(console.log())
+      
+      
+      
+    }
+  }
    
   renderBlock(
     'search-form-block',
     `
-    <form>
+    <form id="form">
       <fieldset class="search-filedset">
         <div class="row">
           <div>
@@ -50,4 +76,14 @@ export function renderSearchFormBlock (checkin:Date, checkout:Date) {
     </form>
     `
   )
+
+  const form = document.getElementById('form')
+
+  if (form){
+    const arrayNames:namesType[] = ['checkin','checkout','price']
+    form.addEventListener('submit', ev => submitFormEvent(ev,arrayNames))
+  }
 }
+
+
+
